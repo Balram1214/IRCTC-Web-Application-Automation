@@ -8,7 +8,7 @@ export class TrainSearchPage extends BasePage {
         this.FROM_STATION_LOCATOR = this.page.getByLabel("Enter From station");
         this.TO_STATION_LOCATOR = this.page.getByLabel("Enter To station");
         this.ALERT_MODEL_LOCATOR = this.page.locator("//button[contains(@aria-label, 'Confirmation')]");
-
+        this.STATION_SUGGESTION_LOCATOR = this.page.getByRole("listbox");
     }
 
     async navigateOnTheTrainSearchPage(baseUrl) {
@@ -29,6 +29,15 @@ export class TrainSearchPage extends BasePage {
         const isFromStationEnabled = await this.isEnabled(this.FROM_STATION_LOCATOR);
 
         return { isFromStationVisible, isFromStationEnabled }
+    }
+
+    async enterFromStation(cityName) {
+        await this.FROM_STATION_LOCATOR.fill(cityName);
+    }
+
+    async getStationSuggestionCount() {
+        await this.STATION_SUGGESTION_LOCATOR.first().waitForVisible;
+        return await this.STATION_SUGGESTION_LOCATOR.count();
     }
 }
 

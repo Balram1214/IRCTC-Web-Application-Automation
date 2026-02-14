@@ -16,3 +16,11 @@ test('TC_01 Verify that the From Station field is visible and enabled.', async (
     expect(fromStationFieldStatus.isFromStationEnabled).toBeTruthy();
 })
 
+test('TC_02 Verify that station suggestions appear when the user enters a city name', async () => {
+    await trainSearchPage.enterFromStation('Pune');
+    const suggestionCpunt = await trainSearchPage.getStationSuggestionCount();
+    expect(suggestionCpunt).toBeGreaterThan(0);
+}
+
+)
+

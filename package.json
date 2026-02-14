@@ -11,5 +11,16 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.2.3"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UtkarshHowale/IRCTC-Web-Application-Automation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/UtkarshHowale/IRCTC-Web-Application-Automation/issues"
+  },
+  "homepage": "https://github.com/UtkarshHowale/IRCTC-Web-Application-Automation#readme"
 }
