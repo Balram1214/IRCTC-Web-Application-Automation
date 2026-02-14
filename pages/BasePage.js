@@ -30,15 +30,15 @@ export class BasePage {
     // ==================================================
 
     async click(locator) {
-        await this.page.locator(locator).click();
+        await locator.click();
     }
 
     async doubleClick(locator) {
-        await this.page.locator(locator).dblclick();
+        await locator.dblclick();
     }
 
     async hover(locator) {
-        await this.page.locator(locator).hover();
+        await locator.hover();
     }
 
     // ==================================================
@@ -46,19 +46,19 @@ export class BasePage {
     // ==================================================
 
     async enterValueInto(locator, value) {
-        await this.page.locator(locator).fill(value);
+        await locator.fill(value);
     }
 
     async enterValueSlowerInto(locator, value) {
-        await this.page.locator(locator).pressSequentially(value);
+        await locator.pressSequentially(value);
     }
 
     async selectByValue(locator, value) {
-        await this.page.locator(locator).selectOption(value);
+        await locator.selectOption(value);
     }
 
     async selectByLabel(locator, label) {
-        await this.page.locator(locator).selectOption({ label });
+        await locator.selectOption({ label });
     }
 
     // ==================================================
@@ -66,15 +66,15 @@ export class BasePage {
     // ==================================================
 
     async isVisible(locator) {
-        return await this.page.locator(locator).isVisible();
+        return await locator.isVisible();
     }
 
     async isChecked(locator) {
-        return await this.page.locator(locator).isChecked();
+        return await locator.isChecked();
     }
 
     async isEnabled(locator) {
-        return await this.page.locator(locator).isEnabled();
+        return await locator.isEnabled();
     }
 
     // ==================================================
@@ -82,11 +82,11 @@ export class BasePage {
     // ==================================================
 
     async getText(locator) {
-        return await this.page.locator(locator).textContent();
+        return await locator.textContent();
     }
 
     async getAllTexts(locator) {
-        return await this.page.locator(locator).allTextContents();
+        return await locator.allTextContents();
     }
 
     // ==================================================
@@ -94,7 +94,7 @@ export class BasePage {
     // ==================================================
 
     async scrollIntoView(locator) {
-        await this.page.locator(locator).scrollIntoViewIfNeeded();
+        await locator.scrollIntoViewIfNeeded();
     }
 
     async scrollToBottom() {
@@ -114,11 +114,11 @@ export class BasePage {
     // ==================================================
 
     async waitForVisible(locator) {
-        await this.page.locator(locator).waitFor({ state: 'visible' });
+        await locator.waitFor({ state: 'visible' });
     }
 
     async waitForHidden(locator) {
-        await this.page.locator(locator).waitFor({ state: 'hidden' });
+        await locator.waitFor({ state: 'hidden' });
     }
 
 }
