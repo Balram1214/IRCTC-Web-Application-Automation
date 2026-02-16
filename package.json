@@ -14,13 +14,5 @@
   },
   "directories": {
     "test": "tests"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/UtkarshHowale/IRCTC-Web-Application-Automation.git"
-  },
-  "bugs": {
-    "url": "https://github.com/UtkarshHowale/IRCTC-Web-Application-Automation/issues"
-  },
-  "homepage": "https://github.com/UtkarshHowale/IRCTC-Web-Application-Automation#readme"
+  }
 }

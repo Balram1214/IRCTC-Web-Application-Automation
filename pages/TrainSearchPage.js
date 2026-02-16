@@ -8,7 +8,10 @@ export class TrainSearchPage extends BasePage {
         this.FROM_STATION_LOCATOR = this.page.getByLabel("Enter From station");
         this.TO_STATION_LOCATOR = this.page.getByLabel("Enter To station");
         this.ALERT_MODEL_LOCATOR = this.page.locator("//button[contains(@aria-label, 'Confirmation')]");
-        this.STATION_SUGGESTION_LOCATOR = this.page.getByRole("listbox");
+        this.SEARCH_SUGGESTION_LOCATOR = this.page.getByRole('option');
+        this.FROM_STATION_PLACEHOLDER_LOCATOR = this.page.getByLabel('From');
+        this.FROM_AUTOCOMPLETE_WRAPPER_LOCATOR = this.page.locator('p-autocomplete[formcontrolname="origin"]');
+
     }
 
     async navigateOnTheTrainSearchPage(baseUrl) {
@@ -31,13 +34,21 @@ export class TrainSearchPage extends BasePage {
         return { isFromStationVisible, isFromStationEnabled }
     }
 
-    async enterFromStation(cityName) {
-        await this.FROM_STATION_LOCATOR.fill(cityName);
+    async enterValueInto(stationName) {
+        await this.enterValueInto(this.FROM_STATION_LOCATOR, stationName);
     }
 
     async getStationSuggestionCount() {
-        await this.STATION_SUGGESTION_LOCATOR.first().waitForVisible;
-        return await this.STATION_SUGGESTION_LOCATOR.count();
+        await this.SEARCH_SUGGESTION_LOCATOR.first().waitForVisible;
+        return await this.SEARCH_SUGGESTION_LOCATOR.count();
     }
+
+    async getAllStationSuggestions() {
+        await this.SEARCH_SUGGESTION_LOCATOR.first().waitForVisible;
+
+        const suggestions = await this.SEARCH_SUGGESTION_LOCATOR.allTextContents();
+        return suggestions.map(text => text.trim());
+    }
+
 }
 
