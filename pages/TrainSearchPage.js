@@ -5,12 +5,19 @@ export class TrainSearchPage extends BasePage {
     constructor(page) {
         /** @type {import('@playwright/test').Page} */
         super(page);
-        this.FROM_STATION_LOCATOR = this.page.getByLabel("Enter From station");
-        this.TO_STATION_LOCATOR = this.page.getByLabel("Enter To station");
+        this.FROM_STATION_LOCATOR = this.page.locator("//input[contains(@aria-label,'Enter From station')]");
+        this.TO_STATION_LOCATOR = this.page.locator("//input[contains(@aria-label,'Enter To station')]");
+
         this.ALERT_MODEL_LOCATOR = this.page.locator("//button[contains(@aria-label, 'Confirmation')]");
-        this.SEARCH_SUGGESTION_LOCATOR = this.page.getByRole('option');
+
+        this.FROM_AUTOCOMPLETE_WRAPPER = this.page.locator('p-autocomplete[formcontrolname="origin"]');
+        this.TO_AUTOCOMPLETE_WRAPPER = this.page.locator('p-autocomplete[formcontrolname="destination"]');
+
+        this.FROM_SUGGESTIONS = this.FROM_AUTOCOMPLETE_WRAPPER.locator("li[role='option']");
+        this.TO_SUGGESTIONS = this.TO_AUTOCOMPLETE_WRAPPER.locator("li[role='option']");
+
         this.FROM_STATION_PLACEHOLDER_LOCATOR = this.page.getByLabel('From');
-        this.FROM_AUTOCOMPLETE_WRAPPER_LOCATOR = this.page.locator('p-autocomplete[formcontrolname="origin"]');
+        this.TO_STATION_PLACEHOLDER_LOCATOR = this.page.getByLabel('To');
 
     }
 
@@ -27,28 +34,45 @@ export class TrainSearchPage extends BasePage {
     }
 
     async isFromStationVisibleAndEnabled() {
-
         const isFromStationVisible = await this.isVisible(this.FROM_STATION_LOCATOR);
         const isFromStationEnabled = await this.isEnabled(this.FROM_STATION_LOCATOR);
 
         return { isFromStationVisible, isFromStationEnabled }
     }
 
-    async enterValueInto(stationName) {
-        await this.enterValueInto(this.FROM_STATION_LOCATOR, stationName);
+    async isToStationVisibledAndEnabled() {
+        const isToStationVisible = await this.isVisible(this.TO_STATION_LOCATOR);
+        const isToStationEnabled = await this.isEnabled(this.TO_STATION_LOCATOR);
+
+        return { isToStationVisible, isToStationEnabled }
     }
 
-    async getStationSuggestionCount() {
-        await this.SEARCH_SUGGESTION_LOCATOR.first().waitForVisible;
-        return await this.SEARCH_SUGGESTION_LOCATOR.count();
+    async enterFromStation(stationName) {
+        await super.enterValueInto(this.FROM_STATION_LOCATOR, stationName);
     }
 
-    async getAllStationSuggestions() {
-        await this.SEARCH_SUGGESTION_LOCATOR.first().waitForVisible;
+    async enterToStation(stationName) {
+        await super.enterValueInto(this.TO_STATION_LOCATOR, stationName);
+    }
 
-        const suggestions = await this.SEARCH_SUGGESTION_LOCATOR.allTextContents();
+
+    async getFromStationSuggestionCount() {
+        await this.FROM_SUGGESTIONS.first().waitFor({ state: 'visible' });
+        return await this.FROM_SUGGESTIONS.count();
+    }
+    async getToStationSuggestionCount() {
+        await this.TO_SUGGESTIONS.first().waitFor({ state: 'visible' });
+        return await this.TO_SUGGESTIONS.count();
+    }
+
+
+    async getAllFromStationSuggestions() {
+        await this.FROM_SUGGESTIONS.first().waitFor({ state: 'visible' });
+        const suggestions = await this.FROM_SUGGESTIONS.allTextContents();
         return suggestions.map(text => text.trim());
     }
+
+
 
 }
 
